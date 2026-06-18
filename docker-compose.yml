@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Centralized Ledger Database for MP asset profiles
+  watch-db:
+    image: postgres:15-alpine
+    container_name: parliament_watch_db
+    environment:
+      POSTGRES_USER: transparency_admin
+      POSTGRES_PASSWORD: secure_watch_pass99
+      POSTGRES_DB: parliament_watch_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - watch-db-data:/var/lib/postgresql/data
+    networks:
+      - parliament-network
+    restart: unless-stopped
+
+  # FastAPI REST API Engine
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: parliament_watch_backend
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql://transparency_admin:secure_watch_pass99@watch-db:5432/parliament_watch_db
+    depends_on:
+      - watch-db
+    networks:
+      - parliament-network
+    restart: unless-stopped
+
+  # Next.js React Frontend Portal
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: parliament_watch_frontend
+    ports:
+      - "3002:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8002
+    depends_on:
+      - backend
+    networks:
+      - parliament-network
+    restart: unless-stopped
+
+volumes:
+  watch-db-data:
+    driver: local
+
+networks:
+  parliament-network:
+    driver: bridge
