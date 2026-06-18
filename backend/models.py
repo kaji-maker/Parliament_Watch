@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from typing import List, Optional
-from sqlalchemy import Column, Integer, String, Boolean, Numeric, Date, ForeignKey, DateTime, Text
+from sqlalchemy import Column, Integer, String, Boolean, Numeric, Date, ForeignKey, DateTime, Text, JSON
 from sqlalchemy.orm import relationship
 from pydantic import BaseModel, Field
 from db import Base
@@ -20,6 +20,12 @@ class MPProfile(Base):
     profile_pic_url = Column(String(300), nullable=True)
     gender = Column(String(20), nullable=False)
     is_active = Column(Boolean, default=True)
+    # 'live' = scraped from parliament portal | 'offline_cache' = loaded from local snapshot
+    data_source = Column(String(20), default="live")
+    votes_secured = Column(Integer, nullable=True)
+    margin_victory = Column(Integer, nullable=True)
+    constituency_promises = Column(JSON, nullable=True)
+    delivered_reforms = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -28,6 +34,10 @@ class MPProfile(Base):
     land_holdings = relationship("MPLandHolding", back_populates="mp", cascade="all, delete-orphan")
     gold_weights = relationship("MPGoldWeight", back_populates="mp", cascade="all, delete-orphan")
     equity_portfolios = relationship("MPEquityPortfolio", back_populates="mp", cascade="all, delete-orphan")
+    speech_transcripts = relationship("MPSpeechTranscript", back_populates="mp", cascade="all, delete-orphan")
+    asset_ledgers = relationship("MPAssetLedger", back_populates="mp", cascade="all, delete-orphan")
+    activity_metrics = relationship("MPActivityMetrics", uselist=False, back_populates="mp", cascade="all, delete-orphan")
+
 
 
 class MPCashBalance(Base):
@@ -106,6 +116,77 @@ class MPEquityPortfolio(Base):
     mp = relationship("MPProfile", back_populates="equity_portfolios")
 
 
+class MPActivityMetrics(Base):
+    __tablename__ = "mp_activity_metrics"
+
+    id = Column(Integer, primary_key=True, index=True)
+    mp_id = Column(Integer, ForeignKey("mp_profiles.id", ondelete="CASCADE"), unique=True, nullable=False)
+    attendance_rate = Column(Numeric(5, 2), default=0.00)
+    total_sessions = Column(Integer, default=0)
+    sessions_attended = Column(Integer, default=0)
+    committee_role = Column(String(200), default="Member")
+    committee_name = Column(String(200), nullable=True)
+    sponsored_bills_count = Column(Integer, default=0)
+    filed_amendments_count = Column(Integer, default=0)
+    speech_instances_count = Column(Integer, default=0)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    mp = relationship("MPProfile", back_populates="activity_metrics")
+
+
+class MPSpeechTranscript(Base):
+    __tablename__ = "mp_speech_transcripts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    mp_id = Column(Integer, ForeignKey("mp_profiles.id", ondelete="CASCADE"), nullable=False)
+    speech_date = Column(Date, nullable=False)
+    topic = Column(String(255), nullable=False)
+    transcript = Column(Text, nullable=False)
+    context = Column(String(255), nullable=True)
+
+    mp = relationship("MPProfile", back_populates="speech_transcripts")
+
+
+class MPAssetLedger(Base):
+    __tablename__ = "mp_asset_ledgers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    mp_id = Column(Integer, ForeignKey("mp_profiles.id", ondelete="CASCADE"), nullable=False)
+    asset_class = Column(String(50), nullable=False)  # CASH, LAND, GOLD, EQUITY
+    item_summary = Column(String(255), nullable=False)
+    valuation_npr = Column(Numeric(15, 2), nullable=False)
+    acquisition_source = Column(Text, nullable=True)
+    reported_date = Column(Date, default=date.today)
+
+    mp = relationship("MPProfile", back_populates="asset_ledgers")
+
+
+class AttendanceNotice(Base):
+    __tablename__ = "attendance_notices"
+
+    id = Column(Integer, primary_key=True, index=True)
+    notice_date = Column(Date, nullable=False)
+    title = Column(String(255), nullable=False)
+    url = Column(String(500), nullable=True)
+    raw_text = Column(Text, nullable=True)
+    parsed_at = Column(DateTime, default=datetime.utcnow)
+
+
+class BillRegistry(Base):
+    __tablename__ = "bill_registries"
+
+    id = Column(Integer, primary_key=True, index=True)
+    bill_number = Column(String(50), nullable=True)
+    title = Column(String(500), nullable=False)
+    sponsor = Column(String(255), nullable=True)
+    registered_date = Column(Date, nullable=True)
+    status = Column(String(100), nullable=True)
+    bill_type = Column(String(100), nullable=True)
+    url = Column(String(500), nullable=True)
+    parsed_at = Column(DateTime, default=datetime.utcnow)
+
+
+
 # ==========================================
 # Pydantic Schemas for Serialization
 # ==========================================
@@ -170,6 +251,68 @@ class MPEquityPortfolioSchema(BaseModel):
         from_attributes = True
 
 
+class MPActivityMetricsSchema(BaseModel):
+    id: Optional[int] = None
+    attendance_rate: float
+    total_sessions: int
+    sessions_attended: int
+    committee_role: str
+    committee_name: Optional[str] = None
+    sponsored_bills_count: int
+    filed_amendments_count: int
+    speech_instances_count: int
+
+    class Config:
+        from_attributes = True
+
+
+class AttendanceNoticeSchema(BaseModel):
+    id: Optional[int] = None
+    notice_date: date
+    title: str
+    url: Optional[str] = None
+    raw_text: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class BillRegistrySchema(BaseModel):
+    id: Optional[int] = None
+    bill_number: Optional[str] = None
+    title: str
+    sponsor: Optional[str] = None
+    registered_date: Optional[date] = None
+    status: Optional[str] = None
+    bill_type: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class MPSpeechTranscriptSchema(BaseModel):
+    id: Optional[int] = None
+    speech_date: date
+    topic: str
+    transcript: str
+    context: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class MPAssetLedgerSchema(BaseModel):
+    id: Optional[int] = None
+    asset_class: str
+    item_summary: str
+    valuation_npr: float
+    acquisition_source: Optional[str] = None
+    reported_date: date
+
+    class Config:
+        from_attributes = True
+
+
 class MPProfileCreateSchema(BaseModel):
     name: str
     party: str
@@ -177,6 +320,10 @@ class MPProfileCreateSchema(BaseModel):
     term: str
     profile_pic_url: Optional[str] = None
     gender: str
+    votes_secured: Optional[int] = None
+    margin_victory: Optional[int] = None
+    constituency_promises: Optional[List[str]] = None
+    delivered_reforms: Optional[List[str]] = None
 
 
 class MPProfileSchema(BaseModel):
@@ -188,10 +335,19 @@ class MPProfileSchema(BaseModel):
     profile_pic_url: Optional[str] = None
     gender: str
     is_active: bool
+    data_source: str = "live"
+    votes_secured: Optional[int] = None
+    margin_victory: Optional[int] = None
+    constituency_promises: Optional[List[str]] = None
+    delivered_reforms: Optional[List[str]] = None
     cash_balances: List[MPCashBalanceSchema] = []
     land_holdings: List[MPLandHoldingSchema] = []
     gold_weights: List[MPGoldWeightSchema] = []
     equity_portfolios: List[MPEquityPortfolioSchema] = []
+    speech_transcripts: List[MPSpeechTranscriptSchema] = []
+    asset_ledgers: List[MPAssetLedgerSchema] = []
+    activity_metrics: Optional[MPActivityMetricsSchema] = None
 
     class Config:
         from_attributes = True
+

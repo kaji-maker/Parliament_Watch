@@ -1,12 +1,18 @@
-from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi import FastAPI, Depends, HTTPException, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List, Optional
+import asyncio
+import time
 import models
 from db import engine, Base, get_db
+import scrapers
+from scrapers.live_members import scrape_live_members
+from scrapers.utils import calculate_offline_metrics
+import logging
 
-# Initialize database schemas
-Base.metadata.create_all(bind=engine)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Parliamentary Transparency & Conflict Monitor API",
@@ -23,113 +29,180 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Seeding Database helper
-def seed_mock_data(db: Session):
-    if db.query(models.MPProfile).count() > 0:
-        return
-    
-    # MP 1
-    mp1 = models.MPProfile(
-        name="Ram Bahadur Thapa",
-        party="CPN-UML",
-        constituency="Kathmandu-4",
-        term="2022-2027",
-        profile_pic_url="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150",
-        gender="Male"
-    )
-    db.add(mp1)
+async def wait_for_db(retries: int = 15, delay: float = 3.0):
+    """
+    Polls the database connection until Postgres is ready.
+    Raises RuntimeError after all retries are exhausted.
+    """
+    from sqlalchemy import text
+    for attempt in range(1, retries + 1):
+        try:
+            with engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+            logger.info(f"Database is ready (attempt {attempt}).")
+            return
+        except Exception as e:
+            logger.warning(f"DB not ready yet (attempt {attempt}/{retries}): {e}")
+            await asyncio.sleep(delay)
+    raise RuntimeError("Database never became ready after maximum retries. Aborting startup.")
+
+
+def load_snapshot_members():
+
+    """
+    Loads the local MP snapshot from disk as a fallback when the live portal is unreachable.
+    Returns a list of MP dicts tagged with data_source='offline_cache'.
+    """
+    import os
+    snapshot_path = os.path.join(os.path.dirname(__file__), "scrapers", "mp_snapshot.txt")
+    members = []
+    try:
+        with open(snapshot_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                parts = line.split("|")
+                if len(parts) < 4:
+                    continue
+                name, party, constituency, gender = parts[0], parts[1], parts[2], parts[3]
+                slug = name.lower().replace(" ", "_")
+                slug = __import__("re").sub(r"[^a-z0-9_]", "", slug)
+                members.append({
+                    "name": name.strip(),
+                    "party": party.strip(),
+                    "constituency": constituency.strip(),
+                    "gender": gender.strip(),
+                    "profile_pic_url": f"https://hr.parliament.gov.np/uploads/member/{slug}.jpg",
+                    "data_source": "offline_cache"
+                })
+        logger.info(f"Loaded {len(members)} MP records from local snapshot (offline cache).")
+    except Exception as e:
+        logger.error(f"Failed to load snapshot: {e}")
+    return members
+
+
+async def sync_members_on_startup(db: Session):
+    """
+    Hybrid startup sync:
+    1. Attempt live Playwright scrape of the official HoR portal.
+    2. If live scrape returns None (portal down / 0 members), fall back to local snapshot.
+    3. Tag every MP record with data_source so API consumers know the data freshness.
+    """
+    logger.info("Triggering active live synchronization for Members of Parliament...")
+
+    live_mps = await scrape_live_members()
+
+    if live_mps:
+        data_source = "live"
+        mp_list = live_mps
+        logger.info(f"Live scrape succeeded — {len(mp_list)} members loaded from parliament portal.")
+    else:
+        logger.warning(
+            "Live scrape returned no data (portal may be down). "
+            "Falling back to local snapshot. Data will be flagged as 'offline_cache'."
+        )
+        mp_list = load_snapshot_members()
+        data_source = "offline_cache"
+
+    if not mp_list:
+        raise RuntimeError(
+            "Both the live parliament portal and the local snapshot returned no data. "
+            "Cannot initialize the database. Aborting startup."
+        )
+
+    # Purge stale profiles and re-seed
+    db.query(models.MPProfile).delete()
     db.commit()
-    db.refresh(mp1)
 
-    # Assets for MP 1
-    db.add(models.MPCashBalance(
-        mp_id=mp1.id, bank_name="Nepal Investment Mega Bank", account_type="Savings", balance=4500000.00
-    ))
-    db.add(models.MPCashBalance(
-        mp_id=mp1.id, bank_name="Nabil Bank Ltd", account_type="Fixed Deposit", balance=12000000.00
-    ))
-    db.add(models.MPLandHolding(
-        mp_id=mp1.id, district="Lalitpur", municipality_ward="Imadol-04",
-        measurement_system="ROPANI", ropanis=1, aanas=4, paisas=2, daams=0,
-        total_area_sq_ft=(1 * 5476) + (4 * 342.25) + (2 * 85.56), 
-        estimated_value=35000000.00, acquisition_source="Inherited"
-    ))
-    db.add(models.MPGoldWeight(
-        mp_id=mp1.id, asset_type="GOLD", weight_tolas=45, estimated_value=5850000.00, acquisition_source="Wedding Gifts"
-    ))
-    db.add(models.MPEquityPortfolio(
-        mp_id=mp1.id, company_name="Chilime Hydropower Co.", ticker="CHCL", shares_count=15000,
-        share_type="PROMOTER", nominal_value=100.00, market_value=7500000.00, ownership_percentage=0.05
-    ))
+    logger.info(f"Writing {len(mp_list)} MP profiles to database (source: {data_source})...")
+    for item in mp_list:
+        ledger_data = calculate_offline_metrics(item["name"], item["party"], item["constituency"])
+        mp = models.MPProfile(
+            name=item["name"],
+            party=item["party"],
+            constituency=item["constituency"],
+            term="2026-2031",
+            profile_pic_url=item.get("profile_pic_url"),
+            gender=item["gender"],
+            is_active=True,
+            data_source=item.get("data_source", data_source),
+            votes_secured=ledger_data["votes_secured"],
+            margin_victory=ledger_data["margin_victory"],
+            constituency_promises=ledger_data["constituency_promises"],
+            delivered_reforms=ledger_data["delivered_reforms"]
+        )
+        db.add(mp)
+        db.flush()  # obtain ID
 
-    # MP 2
-    mp2 = models.MPProfile(
-        name="Sita Devi Shrestha",
-        party="Nepali Congress",
-        constituency="Kaski-2",
-        term="2022-2027",
-        profile_pic_url="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150",
-        gender="Female"
-    )
-    db.add(mp2)
-    db.commit()
-    db.refresh(mp2)
+        # Seed speech transcripts
+        for st in ledger_data.get("speech_transcripts", []):
+            db.add(models.MPSpeechTranscript(
+                mp_id=mp.id,
+                speech_date=st["speech_date"],
+                topic=st["topic"],
+                transcript=st["transcript"],
+                context=st.get("context")
+            ))
 
-    # Assets for MP 2
-    db.add(models.MPCashBalance(
-        mp_id=mp2.id, bank_name="Global IME Bank", account_type="Current Account", balance=2100000.00
-    ))
-    db.add(models.MPLandHolding(
-        mp_id=mp2.id, district="Kaski", municipality_ward="Pokhara-15",
-        measurement_system="ROPANI", ropanis=0, aanas=12, paisas=0, daams=0,
-        total_area_sq_ft=12 * 342.25, 
-        estimated_value=18000000.00, acquisition_source="Purchased from Savings"
-    ))
-    db.add(models.MPGoldWeight(
-        mp_id=mp2.id, asset_type="GOLD", weight_tolas=30, estimated_value=3900000.00, acquisition_source="Inherited"
-    ))
-    db.add(models.MPEquityPortfolio(
-        mp_id=mp2.id, company_name="Nabil Bank Ltd.", ticker="NABIL", shares_count=8500,
-        share_type="ORDINARY", nominal_value=100.00, market_value=5950000.00, ownership_percentage=0.01
-    ))
+        # Seed asset ledgers
+        for al in ledger_data.get("asset_ledgers", []):
+            db.add(models.MPAssetLedger(
+                mp_id=mp.id,
+                asset_class=al["asset_class"],
+                item_summary=al["item_summary"],
+                valuation_npr=al["valuation_npr"],
+                acquisition_source=al.get("acquisition_source"),
+                reported_date=al["reported_date"]
+            ))
 
-    # MP 3
-    mp3 = models.MPProfile(
-        name="Hari Prasad Chaudhary",
-        party="CPN-Maoist Center",
-        constituency="Bara-1",
-        term="2022-2027",
-        profile_pic_url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-        gender="Male"
-    )
-    db.add(mp3)
-    db.commit()
-    db.refresh(mp3)
-
-    # Assets for MP 3
-    db.add(models.MPCashBalance(
-        mp_id=mp3.id, bank_name="Rastriya Banijya Bank", account_type="Savings", balance=850000.00
-    ))
-    db.add(models.MPLandHolding(
-        mp_id=mp3.id, district="Bara", municipality_ward="Kalaiya-02",
-        measurement_system="BIGHA", bighas=2, kathas=5, dhurs=10,
-        total_area_sq_ft=(2 * 72900) + (5 * 3645) + (10 * 182.25), 
-        estimated_value=45000000.00, acquisition_source="Agriculture Earnings & Inheritance"
-    ))
-    db.add(models.MPGoldWeight(
-        mp_id=mp3.id, asset_type="GOLD", weight_tolas=15, estimated_value=1950000.00, acquisition_source="Purchased"
-    ))
-    db.add(models.MPEquityPortfolio(
-        mp_id=mp3.id, company_name="Nepal Telecom", ticker="NTC", shares_count=3200,
-        share_type="ORDINARY", nominal_value=100.00, market_value=2880000.00, ownership_percentage=0.00
-    ))
+        mp_source = item.get("data_source", data_source)
+        if mp_source == "offline_cache":
+            metrics_data = calculate_offline_metrics(mp.name, mp.party, mp.constituency)
+            db.add(models.MPActivityMetrics(
+                mp_id=mp.id,
+                attendance_rate=metrics_data["attendance_rate"],
+                total_sessions=metrics_data["total_sessions"],
+                sessions_attended=metrics_data["sessions_attended"],
+                committee_role=metrics_data["committee_role"],
+                committee_name=metrics_data["committee_name"],
+                sponsored_bills_count=metrics_data["sponsored_bills_count"],
+                filed_amendments_count=metrics_data["filed_amendments_count"],
+                speech_instances_count=metrics_data["speech_instances_count"]
+            ))
+        else:
+            db.add(models.MPActivityMetrics(
+                mp_id=mp.id,
+                attendance_rate=0.00,
+                total_sessions=0,
+                sessions_attended=0,
+                committee_role="Member",
+                committee_name=None,
+                sponsored_bills_count=0,
+                filed_amendments_count=0,
+                speech_instances_count=0
+            ))
 
     db.commit()
+    logger.info(f"Startup sync complete. {len(mp_list)} profiles written (source: {data_source}).")
+
 
 @app.on_event("startup")
-def startup_event():
+async def startup_event():
+    # Step 1: Wait for Postgres to be ready before running migrations
+    await wait_for_db()
+    # Step 2: Create schema tables
+    Base.metadata.create_all(bind=engine)
+    # Step 3: Run hybrid MP sync (live → snapshot fallback)
     db = next(get_db())
-    seed_mock_data(db)
+    await sync_members_on_startup(db)
+    # Step 4: Start background cron worker
+    scrapers.start_worker()
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    scrapers.stop_worker()
 
 # ==========================================
 # REST API Endpoints
@@ -263,3 +336,32 @@ def get_totals(db: Session = Depends(get_db)):
         "cumulative_equity_value_npr": total_equity_sum,
         "total_declared_assets_npr": total_cash_sum + total_land_sum + total_gold_sum + total_equity_sum
     }
+
+# ==========================================
+# Scraper REST Endpoints
+# ==========================================
+
+@app.post("/api/v1/scraper/trigger")
+def trigger_scraper(background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+    """
+    Manually triggers the scraping cycle as a background task.
+    """
+    background_tasks.add_task(scrapers.run_scraper_cycle, db)
+    return {
+        "status": "success",
+        "message": "Scraper cycle triggered successfully in background."
+    }
+
+@app.get("/api/v1/scraper/attendance", response_model=List[models.AttendanceNoticeSchema])
+def get_scraped_attendance(db: Session = Depends(get_db)):
+    """
+    Returns all parsed attendance notices.
+    """
+    return db.query(models.AttendanceNotice).order_by(models.AttendanceNotice.notice_date.desc()).all()
+
+@app.get("/api/v1/scraper/bills", response_model=List[models.BillRegistrySchema])
+def get_scraped_bills(db: Session = Depends(get_db)):
+    """
+    Returns all parsed bills registry logs.
+    """
+    return db.query(models.BillRegistry).order_by(models.BillRegistry.registered_date.desc()).all()
