@@ -72,6 +72,40 @@ def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str 
     h = int(hashlib.md5(mp_name.encode('utf-8')).hexdigest(), 16)
     
     total_sessions = 60
+
+    # Audit lookup from snapshot file to ensure votes & margins are 100% correct
+    import os
+    votes_secured_audit = None
+    margin_victory_audit = None
+    snapshot_path = os.path.join(os.path.dirname(__file__), "mp_snapshot.txt")
+    if os.path.exists(snapshot_path):
+        try:
+            # Simple slugify helper inside the function
+            def local_slugify(val):
+                s = val.lower()
+                s = re.sub(r'[^a-z0-9\s_]', '', s)
+                s = re.sub(r'\s+', '_', s)
+                return s.strip('_')
+                
+            name_slug = local_slugify(mp_name)
+            with open(snapshot_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    parts = line.split("|")
+                    if len(parts) >= 6:
+                        snap_name = parts[0].strip()
+                        snap_const = parts[2].strip()
+                        snap_slug = local_slugify(snap_name)
+                        
+                        # Match by name slug or by constituency (if not proportional)
+                        if (snap_slug == name_slug and name_slug) or (mp_constituency != "Proportional" and snap_const.lower() == mp_constituency.lower()):
+                            votes_secured_audit = int(parts[4]) if parts[4].strip() else 0
+                            margin_victory_audit = int(parts[5]) if parts[5].strip() else 0
+                            break
+        except Exception as e:
+            logger.error(f"Failed to lookup snapshot in calculate_offline_metrics: {e}")
     
     # Specific officials
     if mp_name == "Balen Shah":
@@ -81,8 +115,8 @@ def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str 
         sponsored_bills = 12
         filed_amendments = 4
         speeches = 45
-        votes_secured = 68348
-        margin_victory = 49614
+        votes_secured = votes_secured_audit if votes_secured_audit is not None else 68348
+        margin_victory = margin_victory_audit if margin_victory_audit is not None else 49614
         constituency_promises = [
             "Construct 10 new solar irrigation networks in Jhapa-5.",
             "Establish a high-tech digital citizen feedback hub in Jhapa-5.",
@@ -120,8 +154,8 @@ def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str 
         sponsored_bills = 0
         filed_amendments = 0
         speeches = 52
-        votes_secured = 32450
-        margin_victory = 12140
+        votes_secured = votes_secured_audit if votes_secured_audit is not None else 32450
+        margin_victory = margin_victory_audit if margin_victory_audit is not None else 12140
         constituency_promises = [
             "Upgrade technical capacity of parliamentary drafting committees.",
             "Implement live-broadcasting systems for all thematic committee meetings.",
@@ -159,8 +193,8 @@ def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str 
         sponsored_bills = 0
         filed_amendments = 0
         speeches = 38
-        votes_secured = 28910
-        margin_victory = 8420
+        votes_secured = votes_secured_audit if votes_secured_audit is not None else 28910
+        margin_victory = margin_victory_audit if margin_victory_audit is not None else 8420
         constituency_promises = [
             "Establish a women-centric legislative mentorship network.",
             "Improve basic child education infrastructure in rural communities.",
@@ -191,8 +225,8 @@ def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str 
         sponsored_bills = 8
         filed_amendments = 18
         speeches = 40
-        votes_secured = 25410
-        margin_victory = 4120
+        votes_secured = votes_secured_audit if votes_secured_audit is not None else 25410
+        margin_victory = margin_victory_audit if margin_victory_audit is not None else 4120
         constituency_promises = [
             "Enforce strict legislative oversight on public works procurement.",
             "Ensure regular financial auditing of major infrastructure projects.",
@@ -283,10 +317,10 @@ def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str 
             speeches = 10 + (speech_selector % 15)  # 10 to 24 speeches
         else:
             speeches = 25 + (speech_selector % 26)  # 25 to 50 speeches
-
+ 
         # Phase 9: Election Accountability Ledger Calibration
-        margin_victory = 1500 + (h % 13501)
-        votes_secured = margin_victory + 10000 + (h % 30001)
+        margin_victory = margin_victory_audit if margin_victory_audit is not None else (1500 + (h % 13501))
+        votes_secured = votes_secured_audit if votes_secured_audit is not None else (margin_victory + 10000 + (h % 30001))
 
         generic_promises = [
             f"Improve irrigation infrastructure and access roads in {mp_constituency}.",

@@ -178,8 +178,11 @@ async def _do_scrape(url: str):
                     slug = slugify(name)
                     img_url = get_official_cdn_url(name)
 
+                    snap_item = None
                     if slug in snapshot_lookup:
                         snap_item = snapshot_lookup[slug]
+
+                    if snap_item:
                         name = snap_item["name"]
                         party = snap_item["party"]
                         constituency = snap_item["constituency"]
@@ -224,8 +227,19 @@ async def _do_scrape(url: str):
 
                         gender = "Female" if "महिला" in text_content else "Male"
 
-                    votes_secured = snap_item.get("votes_secured") if slug in snapshot_lookup else None
-                    margin_victory = snap_item.get("margin_victory") if slug in snapshot_lookup else None
+                        # Constituency-based fallback matching for FPTP candidates to align with snapshot
+                        if constituency != "Proportional":
+                            for item in snapshot_lookup.values():
+                                if item["constituency"].lower() == constituency.lower():
+                                    snap_item = item
+                                    name = snap_item["name"]
+                                    party = snap_item["party"]
+                                    gender = snap_item["gender"]
+                                    constituency = snap_item["constituency"]
+                                    break
+
+                    votes_secured = snap_item.get("votes_secured") if snap_item else (0 if constituency == "Proportional" else None)
+                    margin_victory = snap_item.get("margin_victory") if snap_item else (0 if constituency == "Proportional" else None)
 
                     if len(members) < 275:
                         members.append({
