@@ -1,5 +1,65 @@
 import hashlib
+import re
+import logging
 from datetime import date
+import nepali_datetime
+
+logger = logging.getLogger(__name__)
+
+NEPALI_MONTHS_MAP = {
+    "वैशाख": 1, "बैशाख": 1,
+    "जेठ": 2, "ज्येष्ठ": 2,
+    "असार": 3, "आषाढ": 3,
+    "साउन": 4, "श्रावण": 4,
+    "भदौ": 5, "भाद्र": 5,
+    "असोज": 6, "आश्विन": 6,
+    "कात्तिक": 7, "कार्तिक": 7,
+    "मंसिर": 8, "मार्ग": 8, "मङ्सीर": 8,
+    "पुस": 9, "पौष": 9,
+    "माघ": 10,
+    "फागुन": 11, "फाल्गुन": 11,
+    "चैत": 12, "चैत्र": 12
+}
+
+def convert_bs_to_ad(nepali_date_str: str) -> date:
+    """
+    Parses Nepalese text digits, extracts year-month-day tokens,
+    and returns a standard Gregorian date object for PostgreSQL.
+    """
+    if not nepali_date_str:
+        return date.today()
+        
+    try:
+        # Map Devnagari numerical strings to standard integers
+        nep_digits = {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'}
+        clean_str = "".join(nep_digits.get(char, char) for char in str(nepali_date_str))
+        
+        # Check if a month name is present in the clean string
+        bs_month = None
+        for m_name, m_num in NEPALI_MONTHS_MAP.items():
+            if m_name in clean_str:
+                bs_month = m_num
+                break
+                
+        # Find all numeric chunks in the string
+        date_matches = re.findall(r'\d+', clean_str)
+        
+        if bs_month is not None and len(date_matches) >= 2:
+            # Format like "२०८३ असार ४ गते" -> Year is first match, Day is second match
+            bs_year = int(date_matches[0])
+            bs_day = int(date_matches[1])
+            if 2000 <= bs_year <= 2100 and 1 <= bs_day <= 32:
+                return nepali_datetime.date(bs_year, bs_month, bs_day).to_datetime_date()
+        elif len(date_matches) >= 3:
+            # Format like 2083-03-04
+            bs_year, bs_month, bs_day = map(int, date_matches[:3])
+            if 2000 <= bs_year <= 2100 and 1 <= bs_month <= 12 and 1 <= bs_day <= 32:
+                return nepali_datetime.date(bs_year, bs_month, bs_day).to_datetime_date()
+    except Exception as e:
+        logger.error(f"Error converting BS to AD for date string '{nepali_date_str}': {e}")
+        
+    return date.today()
+
 
 def calculate_offline_metrics(mp_name: str, mp_party: str, mp_constituency: str = "Proportional"):
     """

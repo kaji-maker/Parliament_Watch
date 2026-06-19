@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, date
 import logging
+from scrapers.utils import convert_bs_to_ad
 
 logger = logging.getLogger(__name__)
 
@@ -73,9 +74,12 @@ def scrape_attendance_notices():
                                 link = "https://hr.parliament.gov.np" + link
                             
                             try:
-                                parsed_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+                                parsed_date = convert_bs_to_ad(date_str)
                             except Exception:
-                                parsed_date = date.today()
+                                try:
+                                    parsed_date = convert_bs_to_ad(title)
+                                except Exception:
+                                    parsed_date = date.today()
                                 
                             notices.append({
                                 "notice_date": parsed_date,
@@ -90,7 +94,7 @@ def scrape_attendance_notices():
                     text = a.text.strip()
                     if "उपस्थिति" in text or "attendance" in text.lower():
                         notices.append({
-                            "notice_date": date.today(),
+                            "notice_date": convert_bs_to_ad(text),
                             "title": text or "Parliament Attendance Notice",
                             "url": a['href'] if a['href'].startswith("http") else "https://hr.parliament.gov.np" + a['href'],
                             "raw_text": f"Found attendance link: {text}"

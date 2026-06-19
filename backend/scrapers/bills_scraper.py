@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, date
 import logging
+from scrapers.utils import convert_bs_to_ad
 
 logger = logging.getLogger(__name__)
 
@@ -90,9 +91,12 @@ def scrape_bills():
                                 link = "https://hr.parliament.gov.np" + link
                                 
                             try:
-                                reg_date = datetime.strptime(reg_date_str, "%Y-%m-%d").date()
+                                reg_date = convert_bs_to_ad(reg_date_str)
                             except Exception:
-                                reg_date = date.today()
+                                try:
+                                    reg_date = convert_bs_to_ad(title)
+                                except Exception:
+                                    reg_date = date.today()
                                 
                             bills.append({
                                 "bill_number": bill_no,

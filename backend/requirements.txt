@@ -7,4 +7,7 @@ requests==2.31.0
 beautifulsoup4==4.12.3
 playwright==1.42.0
 pymupdf==1.23.26
+nepali-datetime
+
+
 

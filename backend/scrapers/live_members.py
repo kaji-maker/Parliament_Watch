@@ -5,6 +5,50 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+NEPALI_DISTRICTS_MAP = {
+    # Province 1 (Koshi)
+    "ताप्लेजुङ": "Taplejung", "पाँचथर": "Panchthar", "इलाम": "Ilam", "झापा": "Jhapa",
+    "मोरङ": "Morang", "सुनसरी": "Sunsari", "धनकुटा": "Dhankuta", "तेह्रथुम": "Tehrathum",
+    "संखुवासभा": "Sankhuwasabha", "भोजपुर": "Bhojpur", "सोलुखुम्बु": "Solukhumbu",
+    "खोटाङ": "Khotang", "ओखलढुङ्गा": "Okhaldhunga", "ओखलढुंगा": "Okhaldhunga", "उदयपुर": "Udayapur",
+    
+    # Province 2 (Madhesh)
+    "सप्तरी": "Saptari", "सिराहा": "Siraha", "सिरहा": "Siraha", "धनुषा": "Dhanusha",
+    "महोत्तरी": "Mahottari", "सर्लाही": "Sarlahi", "रौतहट": "Rautahat", "बारा": "Bara", "पर्सा": "Parsa",
+    
+    # Bagmati
+    "दोलखा": "Dolakha", "सिन्धुपाल्चोक": "Sindhupalchok", "रसुवा": "Rasuwa",
+    "धादिङ": "Dhading", "नुवाकोट": "Nuwakot", "काठमाडौं": "Kathmandu", "काठमाण्डौ": "Kathmandu",
+    "भक्तपुर": "Bhaktapur", "ललितपुर": "Lalitpur", "काभ्रेपलाञ्चोक": "Kavrepalanchok", "काभ्रे": "Kavrepalanchok",
+    "रामेछाप": "Ramechhap", "सिन्धुली": "Sindhuli", "मकवानपुर": "Makwanpur", "चितवन": "Chitwan",
+    
+    # Gandaki
+    "गोरखा": "Gorkha", "मनाङ": "Manang", "मनांग": "Manang", "मुस्ताङ": "Mustang", "म्याग्दी": "Myagdi",
+    "कास्की": "Kaski", "लमजुङ": "Lamjung", "स्याङ्जा": "Syangja", "स्याङ्गा": "Syangja",
+    "तनहुँ": "Tanahu", "तनहु": "Tanahu", "बागलुङ": "Baglung", "पर्वत": "Parbat",
+    "नवलपुर": "Nawalpur", "नवलपरासी पूर्व": "Nawalpur", "पूर्वी नवलपरासी": "Nawalpur",
+    
+    # Lumbini
+    "गुल्मी": "Gulmi", "अर्घाखाँची": "Arghakhanchi", "पाल्पा": "Palpa",
+    "कपिलवस्तु": "Kapilvastu", "रूपन्देही": "Rupandehi", "रुपन्देही": "Rupandehi",
+    "परासी": "Parasi", "नवलपरासी पश्चिम": "Parasi", "पश्चिम नवलपरासी": "Parasi",
+    "नवलपरासी": "Nawalparasi",
+    "दाङ": "Dang", "प्युठान": "Pyuthan", "रोल्पा": "Rolpa",
+    "पूर्वी रुकुम": "Rukum East", "रुकुम पूर्व": "Rukum East",
+    "बाँके": "Banke", "बर्दिया": "Bardiya",
+    
+    # Karnali
+    "पश्चिम रुकुम": "Rukum West", "रुकुम पश्चिम": "Rukum West",
+    "सल्यान": "Salyan", "डोल्पा": "Dolpa", "जुम्ला": "Jumla", "मुगु": "Mugu",
+    "हुम्ला": "Humla", "कालिकोट": "Kalikot", "जाजरकोट": "Jajarkot",
+    "दैलेख": "Dailekh", "सुर्खेत": "Surkhet",
+    
+    # Sudurpashchim
+    "बाजुरा": "Bajura", "बझाङ": "Bajhang", "डोटी": "Doti", "अछाम": "Achham",
+    "दार्चुला": "Darchula", "बैतडी": "Baitadi", "डडेल्धुरा": "Dadeldhura",
+    "कञ्चनपुर": "Kanchanpur", "कैलाली": "Kailali"
+}
+
 
 def slugify(name):
     """
@@ -157,21 +201,22 @@ async def _do_scrape(url: str):
                                 break
 
                         constituency = "Kathmandu-1"
-                        districts_list = ["काठमाडौं", "ललितपुर", "भक्तपुर", "कास्की", "झापा", "मोरङ", "चितवन", "बाँके", "कैलाली", "धनुषा", "बारा", "पर्सा"]
-                        eng_map = {
-                            "काठमाडौं": "Kathmandu", "ललितपुर": "Lalitpur", "भक्तपुर": "Bhaktapur",
-                            "कास्की": "Kaski", "झापा": "Jhapa", "मोरङ": "Morang",
-                            "चितवन": "Chitwan", "बाँके": "Banke", "कैलाली": "Kailali",
-                            "धनुषा": "Dhanusha", "बारा": "Bara", "पर्सा": "Parsa"
-                        }
-                        for d in districts_list:
-                            if d in text_content:
-                                num_match = re.search(rf"{d}\s*(?:निर्वाचन\s*क्षेत्र\s*(?:नं\.?\s*)?)?(\d+)", text_content)
-                                if not num_match:
-                                    num_match = re.search(r'(\d+)', text_content)
-                                num = num_match.group(1) if num_match else "1"
-                                constituency = f"{eng_map[d]}-{num}"
-                                break
+                        if "समानुपातिक" in text_content:
+                            constituency = "Proportional"
+                        else:
+                            for d_nep, d_eng in NEPALI_DISTRICTS_MAP.items():
+                                if d_nep in text_content:
+                                    num_match = re.search(rf"{d_nep}\s*(?:निर्वाचन\s*क्षेत्र\s*(?:नं\.?\s*)?)?([०-९\d]+)", text_content)
+                                    if not num_match:
+                                        num_match = re.search(r'([०-९\d]+)', text_content)
+                                    num_str = num_match.group(1) if num_match else "1"
+                                    
+                                    # Convert Devanagari numerals to English digits
+                                    dev_nums = {'०': '0', '१': '1', '२': '2', '३': '3', '४': '4', '५': '5', '६': '6', '७': '7', '८': '8', '९': '9'}
+                                    num = "".join(dev_nums.get(c, c) for c in num_str)
+                                    
+                                    constituency = f"{d_eng}-{num}"
+                                    break
 
                         gender = "Female" if "महिला" in text_content else "Male"
 

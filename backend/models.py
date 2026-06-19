@@ -1,7 +1,7 @@
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from typing import List, Optional
 from sqlalchemy import Column, Integer, String, Boolean, Numeric, Date, ForeignKey, DateTime, Text, JSON
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from pydantic import BaseModel, Field
 from db import Base
 
@@ -14,8 +14,8 @@ class MPProfile(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(150), nullable=False)
-    party = Column(String(100), nullable=False)
-    constituency = Column(String(150), nullable=False)
+    party = Column(String(100), nullable=False, index=True)
+    constituency = Column(String(150), nullable=False, index=True)
     term = Column(String(50), nullable=False)  # e.g., "2022-2027"
     profile_pic_url = Column(String(300), nullable=True)
     gender = Column(String(20), nullable=False)
@@ -26,8 +26,8 @@ class MPProfile(Base):
     margin_victory = Column(Integer, nullable=True)
     constituency_promises = Column(JSON, nullable=True)
     delivered_reforms = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationships
     cash_balances = relationship("MPCashBalance", back_populates="mp", cascade="all, delete-orphan")
@@ -59,7 +59,7 @@ class MPLandHolding(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     mp_id = Column(Integer, ForeignKey("mp_profiles.id", ondelete="CASCADE"), nullable=False)
-    district = Column(String(100), nullable=False)
+    district = Column(String(100), nullable=False, index=True)
     municipality_ward = Column(String(150), nullable=False)
     
     # ROPANI or BIGHA
@@ -81,6 +81,39 @@ class MPLandHolding(Base):
     estimated_value = Column(Numeric(15, 2), nullable=True)
     acquisition_source = Column(Text, nullable=True)
     reported_date = Column(Date, default=date.today)
+
+    @validates('ropanis', 'aanas', 'paisas', 'daams', 'bighas', 'kathas', 'dhurs', 'measurement_system')
+    def calculate_sq_ft(self, key, value):
+        sys = value if key == 'measurement_system' else self.measurement_system
+        if isinstance(sys, str):
+            sys = sys.upper()
+            
+        r = float(value or 0) if key == 'ropanis' else float(self.ropanis or 0)
+        a = float(value or 0) if key == 'aanas' else float(self.aanas or 0)
+        p = float(value or 0) if key == 'paisas' else float(self.paisas or 0)
+        d = float(value or 0) if key == 'daams' else float(self.daams or 0)
+        
+        b = float(value or 0) if key == 'bighas' else float(self.bighas or 0)
+        k = float(value or 0) if key == 'kathas' else float(self.kathas or 0)
+        dh = float(value or 0) if key == 'dhurs' else float(self.dhurs or 0)
+        
+        total_sq_ft = 0.0
+        if sys == "ROPANI":
+            total_sq_ft = (
+                r * 5476.0 +
+                a * 342.25 +
+                p * 85.56 +
+                d * 21.39
+            )
+        elif sys == "BIGHA":
+            total_sq_ft = (
+                b * 72900.0 +
+                k * 3645.0 +
+                dh * 182.25
+            )
+        
+        self.total_area_sq_ft = total_sq_ft
+        return value
 
     mp = relationship("MPProfile", back_populates="land_holdings")
 
@@ -129,7 +162,7 @@ class MPActivityMetrics(Base):
     sponsored_bills_count = Column(Integer, default=0)
     filed_amendments_count = Column(Integer, default=0)
     speech_instances_count = Column(Integer, default=0)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     mp = relationship("MPProfile", back_populates="activity_metrics")
 
@@ -169,7 +202,7 @@ class AttendanceNotice(Base):
     title = Column(String(255), nullable=False)
     url = Column(String(500), nullable=True)
     raw_text = Column(Text, nullable=True)
-    parsed_at = Column(DateTime, default=datetime.utcnow)
+    parsed_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 
 class BillRegistry(Base):
@@ -183,7 +216,7 @@ class BillRegistry(Base):
     status = Column(String(100), nullable=True)
     bill_type = Column(String(100), nullable=True)
     url = Column(String(500), nullable=True)
-    parsed_at = Column(DateTime, default=datetime.utcnow)
+    parsed_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 
 
