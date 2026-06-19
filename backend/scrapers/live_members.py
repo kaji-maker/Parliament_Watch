@@ -88,12 +88,16 @@ def load_snapshot_lookup():
                 if len(parts) < 4:
                     continue
                 name, party, constituency, gender = parts[0], parts[1], parts[2], parts[3]
+                votes_secured = int(parts[4]) if len(parts) >= 5 and parts[4].strip() else None
+                margin_victory = int(parts[5]) if len(parts) >= 6 and parts[5].strip() else None
                 slug = slugify(name)
                 lookup[slug] = {
                     "name": name.strip(),
                     "party": party.strip(),
                     "constituency": constituency.strip(),
-                    "gender": gender.strip()
+                    "gender": gender.strip(),
+                    "votes_secured": votes_secured,
+                    "margin_victory": margin_victory
                 }
     except Exception as e:
         logger.error(f"Failed to load snapshot lookup: {e}")
@@ -220,13 +224,18 @@ async def _do_scrape(url: str):
 
                         gender = "Female" if "महिला" in text_content else "Male"
 
+                    votes_secured = snap_item.get("votes_secured") if slug in snapshot_lookup else None
+                    margin_victory = snap_item.get("margin_victory") if slug in snapshot_lookup else None
+
                     if len(members) < 275:
                         members.append({
                             "name": name,
                             "party": party,
                             "constituency": constituency,
                             "gender": gender,
-                            "profile_pic_url": img_url
+                            "profile_pic_url": img_url,
+                            "votes_secured": votes_secured,
+                            "margin_victory": margin_victory
                         })
                 except Exception as ex:
                     logger.debug(f"Error parsing single block: {ex}")

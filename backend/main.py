@@ -66,6 +66,8 @@ def load_snapshot_members():
                 if len(parts) < 4:
                     continue
                 name, party, constituency, gender = parts[0], parts[1], parts[2], parts[3]
+                votes_secured = int(parts[4]) if len(parts) >= 5 and parts[4].strip() else None
+                margin_victory = int(parts[5]) if len(parts) >= 6 and parts[5].strip() else None
                 slug = name.lower().replace(" ", "_")
                 slug = __import__("re").sub(r"[^a-z0-9_]", "", slug)
                 members.append({
@@ -73,6 +75,8 @@ def load_snapshot_members():
                     "party": party.strip(),
                     "constituency": constituency.strip(),
                     "gender": gender.strip(),
+                    "votes_secured": votes_secured,
+                    "margin_victory": margin_victory,
                     "profile_pic_url": f"https://hr.parliament.gov.np/uploads/member/{slug}.jpg",
                     "data_source": "offline_cache"
                 })
@@ -127,8 +131,8 @@ async def sync_members_on_startup(db: Session):
             gender=item["gender"],
             is_active=True,
             data_source=item.get("data_source", data_source),
-            votes_secured=ledger_data["votes_secured"],
-            margin_victory=ledger_data["margin_victory"],
+            votes_secured=item.get("votes_secured") if item.get("votes_secured") is not None else ledger_data["votes_secured"],
+            margin_victory=item.get("margin_victory") if item.get("margin_victory") is not None else ledger_data["margin_victory"],
             constituency_promises=ledger_data["constituency_promises"],
             delivered_reforms=ledger_data["delivered_reforms"]
         )

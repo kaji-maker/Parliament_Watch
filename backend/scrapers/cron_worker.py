@@ -55,8 +55,8 @@ def run_scraper_cycle(db: Session):
                         gender=item["gender"],
                         is_active=True,
                         data_source="live",
-                        votes_secured=ledger_data["votes_secured"],
-                        margin_victory=ledger_data["margin_victory"],
+                        votes_secured=item.get("votes_secured") if item.get("votes_secured") is not None else ledger_data["votes_secured"],
+                        margin_victory=item.get("margin_victory") if item.get("margin_victory") is not None else ledger_data["margin_victory"],
                         constituency_promises=ledger_data["constituency_promises"],
                         delivered_reforms=ledger_data["delivered_reforms"]
                     )
