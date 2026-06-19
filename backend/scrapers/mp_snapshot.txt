@@ -5,133 +5,133 @@
 #
 
 # ── RASTRIYA SWATANTRA PARTY ───────────────────────────────
-Dol Prasad Aryal|Rastriya Swatantra Party|Kathmandu-9|Male|13545|1380
-Balen Shah|Rastriya Swatantra Party|Jhapa-5|Male|15453|3786
-Ganesh Parajuli|Rastriya Swatantra Party|Kathmandu-7|Male|28682|6205
-Kabindra Burlakoti|Rastriya Swatantra Party|Gorkha-2|Male|16503|1659
+Dol Prasad Aryal|Rastriya Swatantra Party|Kathmandu-9|Male|35093|29633
+Balen Shah|Rastriya Swatantra Party|Jhapa-5|Male|68348|49614
+Ganesh Parajuli|Rastriya Swatantra Party|Kathmandu-7|Male|27805|23823
+Kabindra Burlakoti|Rastriya Swatantra Party|Gorkha-2|Male|26660|14960
 Krantishikha Dhital|Rastriya Swatantra Party|Proportional|Female|0|0
 Prakash Chandra Pariyar|Rastriya Swatantra Party|Proportional|Male|0|0
-Hari Prasad Bhusal|Rastriya Swatantra Party|Arghakhanchi-1|Male|30679|5891
-Sushil Khadka|Rastriya Swatantra Party|Baglung-1|Male|18132|7929
-Som Sharma|Rastriya Swatantra Party|Baglung-2|Male|19820|2464
-Hari Mohan Bhandari|Rastriya Swatantra Party|Baitadi-1|Male|14706|6204
-Suresh Kumar Chaudhary|Rastriya Swatantra Party|Banke-1|Male|29831|7279
-Khagendra Sunar|Rastriya Swatantra Party|Banke-3|Male|21428|4036
-Ganesh Dhimal|Rastriya Swatantra Party|Bara-1|Male|32442|8514
-Chandan Kumar Singh|Rastriya Swatantra Party|Bara-2|Male|26081|2857
-Arvind Sah|Rastriya Swatantra Party|Bara-3|Male|20066|6034
-Rahbar Ansari|Rastriya Swatantra Party|Bara-4|Male|25978|7622
-Thakur Singh Tharu|Rastriya Swatantra Party|Bardiya-1|Male|13521|6897
-Shreedhar Pokharel|Rastriya Swatantra Party|Bardiya-2|Male|23566|7010
-Rukesh Ranjit|Rastriya Swatantra Party|Bhaktapur-1|Male|10819|1919
-Rajiv Khatri|Rastriya Swatantra Party|Bhaktapur-2|Male|29566|6809
-Hari Dhakal|Rastriya Swatantra Party|Chitwan-1|Male|21641|8941
-Rabi Lamichhane|Rastriya Swatantra Party|Chitwan-2|Male|11284|4622
-Sobita Gautam|Rastriya Swatantra Party|Chitwan-3|Female|15820|6713
-Tara Prasad Joshi|Rastriya Swatantra Party|Dadeldhura-1|Male|25007|4318
-Devraj Pathak|Rastriya Swatantra Party|Dang-1|Male|26481|9993
-Bipin Kumar Acharya|Rastriya Swatantra Party|Dang-2|Male|21248|9538
-Kamal Subedi|Rastriya Swatantra Party|Dang-3|Male|23257|7334
-Ashika Tamang|Rastriya Swatantra Party|Dhading-1|Female|24159|3723
-Bodh Narayan Shrestha|Rastriya Swatantra Party|Dhading-2|Male|21015|8538
-Ram Binod Yadav|Rastriya Swatantra Party|Dhanusha-2|Male|16141|7421
-Manish Jha|Rastriya Swatantra Party|Dhanusha-3|Male|23732|6937
-Raj Kishor Mahato|Rastriya Swatantra Party|Dhanusha-4|Male|11362|4181
-Jagadish Kharel|Rastriya Swatantra Party|Dolakha-1|Male|10805|1789
-Sudan Gurung|Rastriya Swatantra Party|Gorkha-1|Male|9321|1560
-Sagar Dhakal|Rastriya Swatantra Party|Gulmi-1|Male|16634|3214
-Govinda Panthi|Rastriya Swatantra Party|Gulmi-2|Male|20977|4343
-Nisha Dangi|Rastriya Swatantra Party|Jhapa-1|Female|34211|9667
-Indira Rana Magar|Rastriya Swatantra Party|Jhapa-2|Female|19955|5158
-Prakash Pathak|Rastriya Swatantra Party|Jhapa-3|Male|17171|9130
-Shambhu Prasad Dhakal|Rastriya Swatantra Party|Jhapa-4|Male|22764|4230
-Komal Gyawali|Rastriya Swatantra Party|Kailali-1|Male|21077|7453
-K. P. Khanal|Rastriya Swatantra Party|Kailali-2|Male|17478|5517
-Jagat Prasad Joshi|Rastriya Swatantra Party|Kailali-3|Male|22175|7351
-Khem Raj Koirala|Rastriya Swatantra Party|Kailali-4|Male|26086|6788
-Ananda Bahadur Chand|Rastriya Swatantra Party|Kailali-5|Male|28809|9177
-Janak Singh Dhami|Rastriya Swatantra Party|Kanchanpur-1|Male|19648|4121
-Deepak Raj Bohara|Rastriya Swatantra Party|Kanchanpur-2|Male|20165|7702
-Gyanendra Singh Mahata|Rastriya Swatantra Party|Kanchanpur-3|Male|9394|803
-Mohan Lal Acharya|Rastriya Swatantra Party|Kapilvastu-1|Male|25905|6144
-Bikram Thapa|Rastriya Swatantra Party|Kapilvastu-2|Male|16167|1563
-Khadak Raj Paudel|Rastriya Swatantra Party|Kaski-1|Male|17467|6743
-Uttam Paudel|Rastriya Swatantra Party|Kaski-2|Male|26564|6469
-Bina Gurung|Rastriya Swatantra Party|Kaski-3|Female|12736|860
-Ranju Darshana|Rastriya Swatantra Party|Kathmandu-1|Female|15795|987
-Sunil K.C.|Rastriya Swatantra Party|Kathmandu-2|Male|18819|6312
-Rajunath Pandey|Rastriya Swatantra Party|Kathmandu-3|Male|17894|4915
-Pukar Bam|Rastriya Swatantra Party|Kathmandu-4|Male|19118|2281
-Sasmit Pokharel|Rastriya Swatantra Party|Kathmandu-5|Male|27588|5817
-Shishir Khanal|Rastriya Swatantra Party|Kathmandu-6|Male|17143|5939
-Biraj Bhakta Shrestha|Rastriya Swatantra Party|Kathmandu-8|Male|28147|4334
-Pradip Bista|Rastriya Swatantra Party|Kathmandu-10|Male|16794|7020
-Madhu Kumar Chaulagain|Rastriya Swatantra Party|Kavrepalanchok-1|Male|21080|5602
-Badan Kumar Bhandari|Rastriya Swatantra Party|Kavrepalanchok-2|Male|28800|5136
-Buddha Ratna Maharjan|Rastriya Swatantra Party|Lalitpur-1|Male|17258|571
-Jagdish Kharel|Rastriya Swatantra Party|Lalitpur-2|Male|23476|9785
-Toshima Karki|Rastriya Swatantra Party|Lalitpur-3|Female|13579|6206
-Dharmaraj K.C.|Rastriya Swatantra Party|Lamjung-1|Male|24313|4565
-Pramod Kumar Mahato|Rastriya Swatantra Party|Mahottari-1|Male|19793|2257
-Dipak Kumar Sah|Rastriya Swatantra Party|Mahottari-2|Male|26382|5367
-Ujjawal Kumar Jha|Rastriya Swatantra Party|Mahottari-3|Male|13009|548
-Gauri Kumari|Rastriya Swatantra Party|Mahottari-4|Male|10856|5260
-Prakash Gautam|Rastriya Swatantra Party|Makwanpur-1|Male|19498|3176
-Prashant Upreti|Rastriya Swatantra Party|Makwanpur-2|Male|15564|6264
-Yagyamani Neupane|Rastriya Swatantra Party|Morang-1|Male|24289|6443
-Krishna Kumar Karki|Rastriya Swatantra Party|Morang-2|Male|19856|9520
-Ganesh Karki|Rastriya Swatantra Party|Morang-3|Male|15171|528
-Santosh Rajbanshi|Rastriya Swatantra Party|Morang-4|Male|28030|7499
-Asha Jha|Rastriya Swatantra Party|Morang-5|Male|18772|3533
-Rubina Acharya|Rastriya Swatantra Party|Morang-6|Female|12961|7919
-Rajan Gautam|Rastriya Swatantra Party|Nawalpur-1|Male|30818|9355
-Manish Khanal|Rastriya Swatantra Party|Nawalpur-2|Male|22249|776
-Bikram Timilsina|Rastriya Swatantra Party|Nuwakot-1|Male|16890|3135
-Achuttam Lamichhane|Rastriya Swatantra Party|Nuwakot-2|Male|24599|9346
-Bishwaraj Pokharel|Rastriya Swatantra Party|Okhaldhunga-1|Male|29771|7027
-Madhav Bahadur Thapa|Rastriya Swatantra Party|Palpa-2|Male|16109|8860
-Bikram Khanal|Rastriya Swatantra Party|Parasi-1|Male|21468|6207
-Narendra Kumar Gupta|Rastriya Swatantra Party|Parasi-2|Male|11271|3399
-Sagar Bhusal|Rastriya Swatantra Party|Parbat-1|Male|17713|4484
-Buddhi Prasad Pant|Rastriya Swatantra Party|Parsa-1|Male|17656|7919
-Sushil Kumar Kanu|Rastriya Swatantra Party|Parsa-2|Male|20710|1145
-Ramakant Chaurasiya|Rastriya Swatantra Party|Parsa-3|Male|24840|4305
-Tek Bahadur Shakya|Rastriya Swatantra Party|Parsa-4|Male|14742|4452
-Sushant Vaidik|Rastriya Swatantra Party|Pyuthan-1|Male|22341|9138
-Krishna Hari Budhathoki|Rastriya Swatantra Party|Ramechhap-1|Male|20502|6303
-Rajesh Kumar Chaudhary|Rastriya Swatantra Party|Rautahat-1|Male|22182|3753
-Rabindra Patel|Rastriya Swatantra Party|Rautahat-3|Male|19683|9027
-Ganesh Paudel|Rastriya Swatantra Party|Rautahat-4|Male|25105|1775
-Sunil Lamsal|Rastriya Swatantra Party|Rupandehi-1|Male|23779|8432
-Sulabh Kharel|Rastriya Swatantra Party|Rupandehi-2|Male|13561|4835
-Lekhjung Thapa|Rastriya Swatantra Party|Rupandehi-3|Male|14412|4392
-Kanhaiya Baniya|Rastriya Swatantra Party|Rupandehi-4|Male|18078|9813
-Taufiq Ahmed Khan|Rastriya Swatantra Party|Rupandehi-5|Male|28406|6016
-Pushpa Kumari Chaudhary|Rastriya Swatantra Party|Saptari-1|Male|15772|7859
-Ramjee Yadav|Rastriya Swatantra Party|Saptari-2|Male|15529|5987
-Amarkant Chaudhary|Rastriya Swatantra Party|Saptari-3|Male|12926|3919
-Sitaram Sah|Rastriya Swatantra Party|Saptari-4|Male|28845|7614
-Nitima Bhandari|Rastriya Swatantra Party|Sarlahi-1|Female|14322|2559
-Rabin Mahato|Rastriya Swatantra Party|Sarlahi-2|Male|14658|684
-Narendra Sah Kalwar|Rastriya Swatantra Party|Sarlahi-3|Male|16384|9884
-Amresh Kumar Singh|Rastriya Swatantra Party|Sarlahi-4|Male|26836|8015
-Dhanendra Karki|Rastriya Swatantra Party|Sindhuli-1|Male|15644|2563
-Aashish Gajurel|Rastriya Swatantra Party|Sindhuli-2|Male|16249|9440
-Bharat Prasad Parajuli|Rastriya Swatantra Party|Sindhupalchok-1|Male|22902|4734
-Bablu Gupta|Rastriya Swatantra Party|Siraha-1|Male|29957|5023
-Shiv Shankar Yadav|Rastriya Swatantra Party|Siraha-2|Male|27152|8539
-Shambhu Kumar Yadav|Rastriya Swatantra Party|Siraha-3|Male|23405|8164
-Tapeshwar Yadav|Rastriya Swatantra Party|Siraha-4|Male|13780|2978
-Lal Bikram Thapa|Rastriya Swatantra Party|Sunsari-2|Male|15340|2402
-Ashok Kumar Chaudhary|Rastriya Swatantra Party|Sunsari-3|Male|12661|5024
-Deepak Kumar Sah|Rastriya Swatantra Party|Sunsari-4|Male|20676|8175
-Ramesh Kumar Sapkota|Rastriya Swatantra Party|Surkhet-2|Male|11937|6012
-Dhananjaya Regmi|Rastriya Swatantra Party|Syangja-1|Male|27533|5710
-Jhabilal Dumre|Rastriya Swatantra Party|Syangja-2|Male|26724|2364
-Swarnim Wagle|Rastriya Swatantra Party|Tanahun-1|Male|29614|5771
-Shreeram Neupane|Rastriya Swatantra Party|Tanahun-2|Male|25854|3237
-Paras Mani Gelal|Rastriya Swatantra Party|Udayapur-1|Male|27296|5485
-Surya Bahdaur Tamang|Rastriya Swatantra Party|Udayapur-2|Male|21587|3769
+Hari Prasad Bhusal|Rastriya Swatantra Party|Arghakhanchi-1|Male|35023|12374
+Sushil Khadka|Rastriya Swatantra Party|Baglung-1|Male|20927|8983
+Som Sharma|Rastriya Swatantra Party|Baglung-2|Male|12647|779
+Hari Mohan Bhandari|Rastriya Swatantra Party|Baitadi-1|Male|22134|3940
+Suresh Kumar Chaudhary|Rastriya Swatantra Party|Banke-1|Male|32792|17491
+Khagendra Sunar|Rastriya Swatantra Party|Banke-3|Male|29551|9936
+Ganesh Dhimal|Rastriya Swatantra Party|Bara-1|Male|39998|25775
+Chandan Kumar Singh|Rastriya Swatantra Party|Bara-2|Male|35590|21394
+Arvind Sah|Rastriya Swatantra Party|Bara-3|Male|40697|30645
+Rahbar Ansari|Rastriya Swatantra Party|Bara-4|Male|41200|29561
+Thakur Singh Tharu|Rastriya Swatantra Party|Bardiya-1|Male|49631|34988
+Shreedhar Pokharel|Rastriya Swatantra Party|Bardiya-2|Male|29678|9276
+Rukesh Ranjit|Rastriya Swatantra Party|Bhaktapur-1|Male|42761|30793
+Rajiv Khatri|Rastriya Swatantra Party|Bhaktapur-2|Male|24239|957
+Hari Dhakal|Rastriya Swatantra Party|Chitwan-1|Male|58208|45175
+Rabi Lamichhane|Rastriya Swatantra Party|Chitwan-2|Male|54176|42962
+Sobita Gautam|Rastriya Swatantra Party|Chitwan-3|Female|35060|9236
+Tara Prasad Joshi|Rastriya Swatantra Party|Dadeldhura-1|Male|19131|7010
+Devraj Pathak|Rastriya Swatantra Party|Dang-1|Male|42602|27322
+Bipin Kumar Acharya|Rastriya Swatantra Party|Dang-2|Male|43559|28272
+Kamal Subedi|Rastriya Swatantra Party|Dang-3|Male|44248|27795
+Ashika Tamang|Rastriya Swatantra Party|Dhading-1|Female|36018|8021
+Bodh Narayan Shrestha|Rastriya Swatantra Party|Dhading-2|Male|34736|10546
+Ram Binod Yadav|Rastriya Swatantra Party|Dhanusha-2|Male|41637|31439
+Manish Jha|Rastriya Swatantra Party|Dhanusha-3|Male|43988|27336
+Raj Kishor Mahato|Rastriya Swatantra Party|Dhanusha-4|Male|48270|32461
+Jagadish Kharel|Rastriya Swatantra Party|Dolakha-1|Male|32376|14927
+Sudan Gurung|Rastriya Swatantra Party|Gorkha-1|Male|29896|14498
+Sagar Dhakal|Rastriya Swatantra Party|Gulmi-1|Male|29642|14461
+Govinda Panthi|Rastriya Swatantra Party|Gulmi-2|Male|16967|561
+Nisha Dangi|Rastriya Swatantra Party|Jhapa-1|Female|45680|35130
+Indira Rana Magar|Rastriya Swatantra Party|Jhapa-2|Female|60110|48742
+Prakash Pathak|Rastriya Swatantra Party|Jhapa-3|Male|38674|21380
+Shambhu Prasad Dhakal|Rastriya Swatantra Party|Jhapa-4|Male|43631|31645
+Komal Gyawali|Rastriya Swatantra Party|Kailali-1|Male|17826|4959
+K. P. Khanal|Rastriya Swatantra Party|Kailali-2|Male|19057|7108
+Jagat Prasad Joshi|Rastriya Swatantra Party|Kailali-3|Male|20359|8376
+Khem Raj Koirala|Rastriya Swatantra Party|Kailali-4|Male|28556|17255
+Ananda Bahadur Chand|Rastriya Swatantra Party|Kailali-5|Male|31953|19995
+Janak Singh Dhami|Rastriya Swatantra Party|Kanchanpur-1|Male|24332|13222
+Deepak Raj Bohara|Rastriya Swatantra Party|Kanchanpur-2|Male|33952|23125
+Gyanendra Singh Mahata|Rastriya Swatantra Party|Kanchanpur-3|Male|27118|17675
+Mohan Lal Acharya|Rastriya Swatantra Party|Kapilvastu-1|Male|34148|18288
+Bikram Thapa|Rastriya Swatantra Party|Kapilvastu-2|Male|27635|6108
+Khadak Raj Paudel|Rastriya Swatantra Party|Kaski-1|Male|39883|28669
+Uttam Paudel|Rastriya Swatantra Party|Kaski-2|Male|31911|24418
+Bina Gurung|Rastriya Swatantra Party|Kaski-3|Female|37750|24970
+Ranju Darshana|Rastriya Swatantra Party|Kathmandu-1|Female|15455|9091
+Sunil K.C.|Rastriya Swatantra Party|Kathmandu-2|Male|34238|25364
+Rajunath Pandey|Rastriya Swatantra Party|Kathmandu-3|Male|18757|7586
+Pukar Bam|Rastriya Swatantra Party|Kathmandu-4|Male|29142|20318
+Sasmit Pokharel|Rastriya Swatantra Party|Kathmandu-5|Male|30737|21578
+Shishir Khanal|Rastriya Swatantra Party|Kathmandu-6|Male|27719|21072
+Biraj Bhakta Shrestha|Rastriya Swatantra Party|Kathmandu-8|Male|24592|21375
+Pradip Bista|Rastriya Swatantra Party|Kathmandu-10|Male|37469|29369
+Madhu Kumar Chaulagain|Rastriya Swatantra Party|Kavrepalanchok-1|Male|53344|35476
+Badan Kumar Bhandari|Rastriya Swatantra Party|Kavrepalanchok-2|Male|53344|35476
+Buddha Ratna Maharjan|Rastriya Swatantra Party|Lalitpur-1|Male|23892|4614
+Jagdish Kharel|Rastriya Swatantra Party|Lalitpur-2|Male|15025|6139
+Toshima Karki|Rastriya Swatantra Party|Lalitpur-3|Female|43096|34051
+Dharmaraj K.C.|Rastriya Swatantra Party|Lamjung-1|Male|33898|17022
+Pramod Kumar Mahato|Rastriya Swatantra Party|Mahottari-1|Male|34636|12624
+Dipak Kumar Sah|Rastriya Swatantra Party|Mahottari-2|Male|32722|22524
+Ujjawal Kumar Jha|Rastriya Swatantra Party|Mahottari-3|Male|32451|26482
+Gauri Kumari|Rastriya Swatantra Party|Mahottari-4|Male|30132|21390
+Prakash Gautam|Rastriya Swatantra Party|Makwanpur-1|Male|27851|2387
+Prashant Upreti|Rastriya Swatantra Party|Makwanpur-2|Male|34950|4518
+Yagyamani Neupane|Rastriya Swatantra Party|Morang-1|Male|27367|9845
+Krishna Kumar Karki|Rastriya Swatantra Party|Morang-2|Male|40924|25300
+Ganesh Karki|Rastriya Swatantra Party|Morang-3|Male|36924|12570
+Santosh Rajbanshi|Rastriya Swatantra Party|Morang-4|Male|40833|28015
+Asha Jha|Rastriya Swatantra Party|Morang-5|Male|30434|21019
+Rubina Acharya|Rastriya Swatantra Party|Morang-6|Female|55513|42663
+Rajan Gautam|Rastriya Swatantra Party|Nawalpur-1|Male|50945|34652
+Manish Khanal|Rastriya Swatantra Party|Nawalpur-2|Male|41347|25592
+Bikram Timilsina|Rastriya Swatantra Party|Nuwakot-1|Male|22609|4012
+Achuttam Lamichhane|Rastriya Swatantra Party|Nuwakot-2|Male|32054|16551
+Bishwaraj Pokharel|Rastriya Swatantra Party|Okhaldhunga-1|Male|13953|5
+Madhav Bahadur Thapa|Rastriya Swatantra Party|Palpa-2|Male|26736|13744
+Bikram Khanal|Rastriya Swatantra Party|Parasi-1|Male|45241|35739
+Narendra Kumar Gupta|Rastriya Swatantra Party|Parasi-2|Male|44138|28193
+Sagar Bhusal|Rastriya Swatantra Party|Parbat-1|Male|26561|10607
+Buddhi Prasad Pant|Rastriya Swatantra Party|Parsa-1|Male|27274|14244
+Sushil Kumar Kanu|Rastriya Swatantra Party|Parsa-2|Male|30740|18850
+Ramakant Chaurasiya|Rastriya Swatantra Party|Parsa-3|Male|29679|13313
+Tek Bahadur Shakya|Rastriya Swatantra Party|Parsa-4|Male|28006|15472
+Sushant Vaidik|Rastriya Swatantra Party|Pyuthan-1|Male|27469|9131
+Krishna Hari Budhathoki|Rastriya Swatantra Party|Ramechhap-1|Male|24808|7199
+Rajesh Kumar Chaudhary|Rastriya Swatantra Party|Rautahat-1|Male|28946|18253
+Rabindra Patel|Rastriya Swatantra Party|Rautahat-3|Male|27318|15364
+Ganesh Paudel|Rastriya Swatantra Party|Rautahat-4|Male|36876|21011
+Sunil Lamsal|Rastriya Swatantra Party|Rupandehi-1|Male|54845|42863
+Sulabh Kharel|Rastriya Swatantra Party|Rupandehi-2|Male|56550|43689
+Lekhjung Thapa|Rastriya Swatantra Party|Rupandehi-3|Male|58814|50379
+Kanhaiya Baniya|Rastriya Swatantra Party|Rupandehi-4|Male|28066|7804
+Taufiq Ahmed Khan|Rastriya Swatantra Party|Rupandehi-5|Male|38806|25706
+Pushpa Kumari Chaudhary|Rastriya Swatantra Party|Saptari-1|Male|38195|30348
+Ramjee Yadav|Rastriya Swatantra Party|Saptari-2|Male|28404|14141
+Amarkant Chaudhary|Rastriya Swatantra Party|Saptari-3|Male|32875|17636
+Sitaram Sah|Rastriya Swatantra Party|Saptari-4|Male|36412|23309
+Nitima Bhandari|Rastriya Swatantra Party|Sarlahi-1|Female|44181|36310
+Rabin Mahato|Rastriya Swatantra Party|Sarlahi-2|Male|42512|33989
+Narendra Sah Kalwar|Rastriya Swatantra Party|Sarlahi-3|Male|46890|33552
+Amresh Kumar Singh|Rastriya Swatantra Party|Sarlahi-4|Male|35688|12857
+Dhanendra Karki|Rastriya Swatantra Party|Sindhuli-1|Male|16659|784
+Aashish Gajurel|Rastriya Swatantra Party|Sindhuli-2|Male|17940|3160
+Bharat Prasad Parajuli|Rastriya Swatantra Party|Sindhupalchok-1|Male|24412|7085
+Bablu Gupta|Rastriya Swatantra Party|Siraha-1|Male|41322|31538
+Shiv Shankar Yadav|Rastriya Swatantra Party|Siraha-2|Male|39561|26747
+Shambhu Kumar Yadav|Rastriya Swatantra Party|Siraha-3|Male|32249|22093
+Tapeshwar Yadav|Rastriya Swatantra Party|Siraha-4|Male|36210|28238
+Lal Bikram Thapa|Rastriya Swatantra Party|Sunsari-2|Male|57348|41277
+Ashok Kumar Chaudhary|Rastriya Swatantra Party|Sunsari-3|Male|47421|26920
+Deepak Kumar Sah|Rastriya Swatantra Party|Sunsari-4|Male|42771|26184
+Ramesh Kumar Sapkota|Rastriya Swatantra Party|Surkhet-2|Male|30826|14434
+Dhananjaya Regmi|Rastriya Swatantra Party|Syangja-1|Male|29071|10214
+Jhabilal Dumre|Rastriya Swatantra Party|Syangja-2|Male|25354|4524
+Swarnim Wagle|Rastriya Swatantra Party|Tanahun-1|Male|38040|21809
+Shreeram Neupane|Rastriya Swatantra Party|Tanahun-2|Male|32687|18552
+Paras Mani Gelal|Rastriya Swatantra Party|Udayapur-1|Male|30590|18984
+Surya Bahdaur Tamang|Rastriya Swatantra Party|Udayapur-2|Male|14802|7154
 Basumaya Tamang|Rastriya Swatantra Party|Proportional|Female|0|0
 Ganga Chhantyal|Rastriya Swatantra Party|Proportional|Female|0|0
 Sumnima Udas|Rastriya Swatantra Party|Proportional|Female|0|0
@@ -190,24 +190,24 @@ Gazala Shamim Miqrani|Rastriya Swatantra Party|Proportional|Female|0|0
 
 # ── NEPALI CONGRESS ───────────────────────────────
 Bhishma Raj Angdembe|Nepali Congress|Proportional|Male|0|0
-Basana Thapa|Nepali Congress|Dailekh-1|Female|11040|2118
-Nishkal Rai|Nepali Congress|Ilam-1|Male|27146|4627
-Bharat Kumar Swar|Nepali Congress|Achham-1|Male|17402|4336
-Janak Raj Giri|Nepali Congress|Bajura-1|Male|30842|7198
-Bharat Bahadur Khadka|Nepali Congress|Doti-1|Male|26318|4780
+Basana Thapa|Nepali Congress|Dailekh-1|Female|12372|576
+Nishkal Rai|Nepali Congress|Ilam-1|Male|14543|911
+Bharat Kumar Swar|Nepali Congress|Achham-1|Male|10759|526
+Janak Raj Giri|Nepali Congress|Bajura-1|Male|17173|540
+Bharat Bahadur Khadka|Nepali Congress|Doti-1|Male|14897|787
 Jayapati Rokaya|Nepali Congress|Humla-1|Male|8797|1554
-Khadak Bahadur Budha|Nepali Congress|Jajarkot-1|Male|24304|3191
-Abhishek Pratap Shah|Nepali Congress|Kapilvastu-3|Male|27451|8159
-Tek Bahadur Gurung|Nepali Congress|Manang-1|Male|30203|9607
-Khadga Shahi|Nepali Congress|Mugu-1|Male|17447|3118
-Yogesh Gauchan Thakali|Nepali Congress|Mustang-1|Male|15356|7597
-Sandeep Rana|Nepali Congress|Palpa-1|Male|19578|7965
-Narendra Kerung|Nepali Congress|Panchthar-1|Male|16418|6523
-Mohan Acharya|Nepali Congress|Rasuwa-1|Male|13691|5737
-Firdosh Alam|Nepali Congress|Rautahat-2|Male|26460|8139
-Prakash Singh Karki|Nepali Congress|Solukhumbu-1|Male|17612|4063
-Bishnu Bahadur Khadka|Nepali Congress|Surkhet-1|Male|22421|5695
-Santosh Subba|Nepali Congress|Tehrathum-1|Male|25610|1474
+Khadak Bahadur Budha|Nepali Congress|Jajarkot-1|Male|20142|2735
+Abhishek Pratap Shah|Nepali Congress|Kapilvastu-3|Male|23535|4645
+Tek Bahadur Gurung|Nepali Congress|Manang-1|Male|2415|1961
+Khadga Shahi|Nepali Congress|Mugu-1|Male|7914|1196
+Yogesh Gauchan Thakali|Nepali Congress|Mustang-1|Male|3307|1501
+Sandeep Rana|Nepali Congress|Palpa-1|Male|18336|1517
+Narendra Kerung|Nepali Congress|Panchthar-1|Male|17233|2499
+Mohan Acharya|Nepali Congress|Rasuwa-1|Male|10656|5085
+Firdosh Alam|Nepali Congress|Rautahat-2|Male|29528|11086
+Prakash Singh Karki|Nepali Congress|Solukhumbu-1|Male|13166|3752
+Bishnu Bahadur Khadka|Nepali Congress|Surkhet-1|Male|26897|8007
+Santosh Subba|Nepali Congress|Tehrathum-1|Male|11561|879
 Geeta Kumari Sendang|Nepali Congress|Proportional|Female|0|0
 Gangalaxmi Awaala|Nepali Congress|Proportional|Female|0|0
 Geeta Gurung|Nepali Congress|Proportional|Female|0|0
@@ -230,15 +230,15 @@ Shahzan Khatun|Nepali Congress|Proportional|Female|0|0
 
 # ── CPN-UML ───────────────────────────────
 Ram Bahadur Thapa|CPN-UML|Proportional|Male|0|0
-Ain Bahadur Mahar|CPN-UML|Bajhang-1|Male|30246|9096
-Yagya Bahadur Bogati|CPN-UML|Achham-2|Male|16262|2941
-Mohammad Ishtiyaq Rayi|CPN-UML|Banke-2|Male|25152|4392
-Laxmi Prasad Pokharel|CPN-UML|Dailekh-2|Male|25547|6655
-Ganesh Singh Thagunna|CPN-UML|Darchula-1|Male|28833|4266
-Rajendra Kumar Rai|CPN-UML|Dhankuta-1|Male|16651|8936
-Suhang Nembang|CPN-UML|Ilam-2|Male|21068|9451
-Arjun Kumar Karki|CPN-UML|Sankhuwasabha-1|Male|17901|2739
-Kshitij Thebe|CPN-UML|Taplejung-1|Male|27995|7108
+Ain Bahadur Mahar|CPN-UML|Bajhang-1|Male|18543|2239
+Yagya Bahadur Bogati|CPN-UML|Achham-2|Male|9518|472
+Mohammad Ishtiyaq Rayi|CPN-UML|Banke-2|Male|24628|5946
+Laxmi Prasad Pokharel|CPN-UML|Dailekh-2|Male|13889|4337
+Ganesh Singh Thagunna|CPN-UML|Darchula-1|Male|18891|3055
+Rajendra Kumar Rai|CPN-UML|Dhankuta-1|Male|18132|3875
+Suhang Nembang|CPN-UML|Ilam-2|Male|22426|7776
+Arjun Kumar Karki|CPN-UML|Sankhuwasabha-1|Male|15636|636
+Kshitij Thebe|CPN-UML|Taplejung-1|Male|13962|2251
 Bhumika Limbu Subba|CPN-UML|Proportional|Female|0|0
 Gangadevi Shrestha|CPN-UML|Proportional|Female|0|0
 Kul Bhakta Shakya|CPN-UML|Proportional|Male|0|0
@@ -256,14 +256,14 @@ Chandeshwar Mandal|CPN-UML|Proportional|Male|0|0
 Sajida Khatun Siddiqui|CPN-UML|Proportional|Female|0|0
 
 # ── NEPAL COMMUNIST PARTY ───────────────────────────────
-Pushpa Kamal Dahal|Nepal Communist Party|Eastern-Rukum-1|Male|17958|8826
-Yubaraj Dulal|Nepal Communist Party|Sindhupalchok-2|Male|28047|6765
-Matrika Prasad Yadav|Nepal Communist Party|Dhanusha-1|Male|11404|1463
-Dhan Bahadur Buda|Nepal Communist Party|Dolpa-1|Male|25263|2583
-Mahendra Bahadur Shahi|Nepal Communist Party|Kalikot-1|Male|15466|5918
-Barshman Pun|Nepal Communist Party|Rolpa-1|Male|26116|4010
-Gopal Sharma|Nepal Communist Party|Western-Rukum-1|Male|14597|1396
-Ramesh Kumar Malla|Nepal Communist Party|Salyan-1|Male|24207|834
+Pushpa Kamal Dahal|Nepal Communist Party|Eastern-Rukum-1|Male|10240|6778
+Yubaraj Dulal|Nepal Communist Party|Sindhupalchok-2|Male|21699|2553
+Matrika Prasad Yadav|Nepal Communist Party|Dhanusha-1|Male|10430|928
+Dhan Bahadur Buda|Nepal Communist Party|Dolpa-1|Male|6802|1406
+Mahendra Bahadur Shahi|Nepal Communist Party|Kalikot-1|Male|11734|1087
+Barshman Pun|Nepal Communist Party|Rolpa-1|Male|27460|15452
+Gopal Sharma|Nepal Communist Party|Western-Rukum-1|Male|21609|4948
+Ramesh Kumar Malla|Nepal Communist Party|Salyan-1|Male|23189|2285
 Bhim Kumari Budha Magar|Nepal Communist Party|Proportional|Female|0|0
 Parshuram Tamang|Nepal Communist Party|Proportional|Male|0|0
 Balabati Sharma|Nepal Communist Party|Proportional|Female|0|0
@@ -276,19 +276,19 @@ Jogkumar Barbariya Yadav|Nepal Communist Party|Proportional|Male|0|0
 
 # ── SHRAM SANSKRITI PARTY ───────────────────────────────
 Ruby Kumari Thakur|Shram Sanskriti Party|Proportional|Female|0|0
-Harka Sampang|Shram Sanskriti Party|Sunsari-1|Male|25851|906
-Aaren Rai|Shram Sanskriti Party|Khotang-1|Male|28408|3809
-Dhurbaraj Rai|Shram Sanskriti Party|Bhojpur-1|Male|11299|5027
+Harka Sampang|Shram Sanskriti Party|Sunsari-1|Male|35741|8492
+Aaren Rai|Shram Sanskriti Party|Khotang-1|Male|16612|3898
+Dhurbaraj Rai|Shram Sanskriti Party|Bhojpur-1|Male|16663|1913
 Purna Prasad Limbu|Shram Sanskriti Party|Proportional|Male|0|0
 Ambika Devi Sangraula|Shram Sanskriti Party|Proportional|Female|0|0
 Radhika Ramtel|Shram Sanskriti Party|Proportional|Female|0|0
 
 # ── RASTRIYA PRAJATANTRA PARTY ───────────────────────────────
-Gyanendra Shahi|Rastriya Prajatantra Party|Jumla-1|Male|20703|3471
+Gyanendra Shahi|Rastriya Prajatantra Party|Jumla-1|Male|14816|3181
 Khusbu Oli|Rastriya Prajatantra Party|Proportional|Female|0|0
 Saraswati Lama|Rastriya Prajatantra Party|Proportional|Female|0|0
 Bharat Giri|Rastriya Prajatantra Party|Proportional|Male|0|0
 Tahir Ali Bhat|Rastriya Prajatantra Party|Proportional|Male|0|0
 
 # ── INDEPENDENT ───────────────────────────────
-Mahabir Pun|Independent|Myagdi-1|Male|27450|7086
+Mahabir Pun|Independent|Myagdi-1|Male|22850|14931
