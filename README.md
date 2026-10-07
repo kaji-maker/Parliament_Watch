@@ -88,7 +88,7 @@ python -m unittest discover -s tests -v
 cd frontend
 npm ci
 npm run lint
-node --experimental-strip-types --test --test-isolation=none tests/*.test.mjs
+node --experimental-strip-types --test tests/*.test.mjs
 npx tsc --noEmit
 npm run build
 ```

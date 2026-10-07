@@ -46,6 +46,19 @@ validated. Runtime metadata explicitly says `not_validated` and publishes null
 counts and import timestamps. Public records resume only after evidence-backed
 ingestion, review and schema work in later phases.
 
+## GitHub CI follow-up
+
+The declared backend dependencies passed all 9 tests, including real BS/AD
+calendar conversion; Compose validation passed. Frontend lint passed after
+removing an unused manifest dependency absent from the original lockfile.
+The test command was corrected for Node 22 compatibility. Consult the current
+PR checks for the final frontend type/build result.
+
+Dependency installation reports 14 existing npm advisories (1 moderate, 12 high,
+1 critical). They have not been individually triaged or fixed in this safety
+change. Dependency security review and remediation are required before deployment;
+passing functional CI is not a security clearance.
+
 ## Before proceeding
 
 1. Review the quarantine behavior and CI results. Do not describe this as an
