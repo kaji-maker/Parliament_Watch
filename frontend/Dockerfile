@@ -1,15 +1,18 @@
-FROM node:20-alpine
-
+FROM node:22-bookworm-slim AS build
 WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
+RUN npm run build
 
+FROM node:22-bookworm-slim AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+COPY --from=build --chown=node:node /app/.next/standalone ./
+COPY --from=build --chown=node:node /app/.next/static ./.next/static
+COPY --from=build --chown=node:node /app/public ./public
+USER node
 EXPOSE 3000
-
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-CMD ["npm", "run", "dev"]
+CMD ["node", "server.js"]

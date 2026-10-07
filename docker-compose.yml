@@ -1,57 +1,51 @@
-version: '3.8'
-
 services:
-  # Centralized Ledger Database for MP asset profiles
   watch-db:
     image: postgres:15-alpine
-    container_name: parliament_watch_db
     environment:
-      POSTGRES_USER: transparency_admin
-      POSTGRES_PASSWORD: secure_watch_pass99
-      POSTGRES_DB: parliament_watch_db
-    ports:
-      - "5434:5432"
+      POSTGRES_USER: ${POSTGRES_USER:-transparency_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-parliament_watch_db}
+    # Keep the existing named volume. Never use down -v on legacy data.
     volumes:
       - watch-db-data:/var/lib/postgresql/data
     networks:
       - parliament-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # FastAPI REST API Engine
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: parliament_watch_backend
+    build: ./backend
     ports:
-      - "8002:8000"
-    environment:
-      - DATABASE_URL=postgresql://transparency_admin:secure_watch_pass99@watch-db:5432/parliament_watch_db
-    depends_on:
-      - watch-db
+      - "127.0.0.1:${BACKEND_PORT:-8002}:8000"
+    # Phase 1 deliberately never connects to or changes the legacy database.
     networks:
       - parliament-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
-  # Next.js React Frontend Portal
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: parliament_watch_frontend
+    build: ./frontend
     ports:
-      - "3002:3000"
+      - "127.0.0.1:${FRONTEND_PORT:-3002}:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8002
+      API_INTERNAL_URL: http://backend:8000
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     networks:
       - parliament-network
     restart: unless-stopped
 
 volumes:
   watch-db-data:
-    driver: local
 
 networks:
   parliament-network:
