@@ -659,3 +659,15 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Phase 1 availability states: readable, keyboard-accessible, no metrics. */
+.availability-panel { padding: 2rem; margin-bottom: 1.5rem; }
+.availability-panel h2 { margin-bottom: 1rem; }
+.availability-panel p { line-height: 1.8; margin-bottom: 1.5rem; max-width: 70ch; }
+.availability-panel button, .language-controls button { padding: .7rem 1rem; min-height: 44px; border: 1px solid #94a3b8; border-radius: 8px; background: #1e293b; color: #f8fafc; cursor: pointer; }
+.language-controls { display: flex; gap: .5rem; }
+.language-controls button[aria-pressed="true"] { background: #334155; border-color: #67e8f9; }
+.availability-panel button:disabled { opacity: .7; cursor: wait; }
+.availability-panel button:focus-visible, .language-controls button:focus-visible, .source-links a:focus-visible { outline: 3px solid #67e8f9; outline-offset: 4px; }
+.source-links { padding-left: 1.5rem; line-height: 2.5; }
+.source-links a { color: #67e8f9; text-decoration: underline; }
+.availability-footer { line-height: 1.8; color: #cbd5e1; padding-bottom: 2rem; }
